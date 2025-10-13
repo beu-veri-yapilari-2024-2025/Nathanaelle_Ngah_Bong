@@ -1,4 +1,4 @@
-1class Programlama
+class Programlama
 {
 
 

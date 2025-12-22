@@ -1,0 +1,162 @@
+class program 
+{ 
+    public class Node 
+{ 
+    public int Data;     public Node Left;     public Node Right; 
+ 
+     public Node(int data) 
+    { 
+        Data = data; 
+        Left = null; 
+        Right = null; 
+    } } 
+    public class BinarySearchTree 
+    { 
+        private Node root; 
+ 
+        public BinarySearchTree() 
+        { 
+            root = null; 
+        } 
+        public void Ekle(int data) 
+        { 
+            root = EkleRecursive(root, data); 
+        }  
+        private Node EkleRecursive(Node current, int data) 
+        { 
+            if (current == null) 
+            { 
+                return new Node(data); 
+            } 
+ 
+            if (data < current.Data) 
+            { 
+                current.Left = EkleRecursive(current.Left, data); 
+            } 
+            else if (data > current.Data) 
+            { 
+                current.Right = EkleRecursive(current.Right, data); 
+            } 
+ 
+            return current; 
+        }                 current.Right = SilRecursive(current.Right, current.Data);             }             return current; 
+        }  
+        private int MinDeger(Node node) 
+        {             int min = node.Data;             while (node.Left != null) 
+            { 
+                min = node.Left.Data;                 node = node.Left; 
+            }             return min;         } 
+        public void PreOrderDolasim(Node node) 
+        { 
+            if (node != null) 
+            { 
+                Console.Write(node.Data + " "); 
+                PreOrderDolasim(node.Left); 
+                PreOrderDolasim(node.Right); 
+            }         } 
+        public void InOrderDolasim(Node node) 
+        { 
+            if (node != null) 
+            { 
+                InOrderDolasim(node.Left); 
+                Console.Write(node.Data + " "); 
+                InOrderDolasim(node.Right); 
+            }         } 
+        public void PostOrderDolasim(Node node) 
+        { 
+            if (node != null) 
+            { 
+                PostOrderDolasim(node.Left); 
+                PostOrderDolasim(node.Right); 
+                Console.Write(node.Data + " "); 
+            }         } 
+        public void LevelOrderDolasim() 
+        { 
+            if (root == null) return;             Queue<Node> queue = new Queue<Node>();             queue.Enqueue(root); 
+ 
+            while (queue.Count > 0) 
+            { 
+                Node current = queue.Dequeue(); 
+                Console.Write(current.Data + " "); 
+ 
+                if (current.Left != null) 
+                { 
+                    queue.Enqueue(current.Left); 
+                } 
+ 
+                if (current.Right != null) 
+                { 
+                    queue.Enqueue(current.Right); 
+                } 
+            }         } 
+        public Node Root => root; 
+        public void PreOrder() => PreOrderDolasim(root);         public void InOrder() => InOrderDolasim(root);         public void PostOrder() => PostOrderDolasim(root); 
+    } 
+    static void Main(string[] args) 
+    { 
+        BinarySearchTree bst = new BinarySearchTree();         bool running = true; 
+ 
+        while (running) 
+        { 
+            Console.WriteLine("1. Değer Ekle (Ekleme)"); 
+            Console.WriteLine("2. Değer Sil (Silme)"); 
+            Console.WriteLine("3. Değer Ara (Arama)"); 
+            Console.WriteLine("4. Dolaşım Yöntemlerini Göster"); 
+            Console.WriteLine("5. Çıkış"); 
+            Console.Write("Seçiminizi yapın (1-5): "); 
+ 
+            if (int.TryParse(Console.ReadLine(), out int choice)) 
+            { 
+                int data; 
+ 
+                switch (choice) 
+                {                     case 1:  
+                        Console.Write("Eklenecek tamsayı değeri girin: ");                         if (int.TryParse(Console.ReadLine(), out data)) 
+                        { 
+                            bst.Ekle(data); 
+                        }                         else 
+                        { 
+                            Console.WriteLine("Hata: Geçersiz tamsayı formatı."); 
+                        }                         break; 
+                     case 2:  
+                        Console.Write("Silinecek tamsayı değeri girin: ");                         if (int.TryParse(Console.ReadLine(), out data)) 
+                        { 
+                            bst.Sil(data); 
+                        }                         else 
+                        { 
+                            Console.WriteLine("Hata: Geçersiz tamsayı formatı."); 
+                        }                         break; 
+ 
+                    case 3: // Ara 
+                        Console.Write("Aranacak tamsayı değeri girin: ");                         if (int.TryParse(Console.ReadLine(), out data))                         { 
+                            if (bst.Ara(data)) 
+                            { 
+                                Console.WriteLine($"Sonuç: {data} ağaçta bulundu."); 
+                            }                             else 
+                            { 
+                                Console.WriteLine($"Sonuç: {data} ağaçta bulunamadı."); 
+                            }                         }                         else 
+                        { 
+                            Console.WriteLine("Hata: Geçersiz tamsayı formatı."); 
+                        }                         break; 
+                     case 4: 
+                        Console.WriteLine("\n--- DOLAŞIM SONUÇLARI ---"); 
+                        bst.PreOrder();                         bst.InOrder();                         bst.PostOrder();                         bst.LevelOrderDolasim();                         break; 
+                     case 5:                          running = false; 
+                        Console.WriteLine("Programdan çıkılıyor. Güle güle!");                         break; 
+                     default: 
+                        Console.WriteLine("Geçersiz seçim. Lütfen 1 ile 5 arasında bir sayı girin."); 
+                        break; 
+                }             }             else 
+            { 
+                Console.WriteLine("Hata: Lütfen bir sayı girin."); 
+            } 
+ 
+            Console.WriteLine("\nDevam etmek için bir tuşa basın..."); 
+            Console.ReadKey(); 
+            
+        } 
+    } 
+} 
+ 
+
